@@ -11,7 +11,7 @@ import com.minh137.minh137.repository.MySkillsRepository;
 
 @Service
 public class MySkillsService {
-
+    
     @Autowired
     private MySkillsRepository mySkillsRepository;
 
@@ -23,9 +23,9 @@ public class MySkillsService {
     //update
     public Optional<MySkills> updateMySkills(Long id, MySkills updateMySkills){
         return mySkillsRepository.findById(id).map(skill -> {
-            skill.setName(updateMySkills.getName());
-            skill.setValue(updateMySkills.getValue());
-            return mySkillsRepository.save(skill);
+           skill.setName(updateMySkills.getName());
+           skill.setValue(updateMySkills.getValue());
+           return mySkillsRepository.save(skill);
         });
     }
 
@@ -37,7 +37,7 @@ public class MySkillsService {
         }
         return false;
     }
-
+    
     //list
     public List<MySkills> getAllMySkills(){
         return mySkillsRepository.findAll();

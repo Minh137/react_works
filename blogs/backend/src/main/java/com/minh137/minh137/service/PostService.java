@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.minh137.minh137.entity.Post;
+import com.minh137.minh137.entity.PostFile;
+import com.minh137.minh137.repository.PostFileRepository;
 import com.minh137.minh137.repository.PostRepository;
 
 @Service
@@ -15,9 +17,19 @@ public class PostService {
    @Autowired 
    private PostRepository postRepository;
 
+   @Autowired
+   private PostFileRepository postFileRepository;
+
    //crud를 맹글자!!!
    public List<Post> getAllPosts(){
-      return postRepository.findAll();
+       List<Post> posts = postRepository.findAll();
+       posts.forEach(post-> {
+           Optional<PostFile> firstImg = 
+                         postFileRepository.findFirstImageByNtime(post.getNtime());
+           post.setFirstImg(firstImg.map(PostFile::getNfilename).orElse(null));
+       });
+       System.out.println(posts);
+       return posts;
    }
 
    public Optional<Post> getPostByPost(String post){
@@ -44,3 +56,4 @@ public class PostService {
    }
 
 }
+
